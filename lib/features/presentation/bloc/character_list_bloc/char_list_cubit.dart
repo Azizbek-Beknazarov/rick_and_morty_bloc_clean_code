@@ -22,6 +22,20 @@ class CharListCubit extends Cubit<CharListState> {
     if (currentState is CharacterLoaded) {
       oldList = currentState.charList;
     }
+    emit(CharacterLoading(oldList, isFirstFetch: page == 1));
+
+    final failOrCharacter =
+        await getCharacterUsecase(CharacterPageParams(page: page));
+
+    failOrCharacter.fold(
+            (l) => emit(CharacterError(message: _mapFailureToMessage(l))),
+            (r) {
+      page++;
+      final characters = (state as CharacterLoading).oldList;
+      characters.addAll(r);
+      print('List uzunligi: ${characters.length.toString()}');
+      emit(CharacterLoaded(characters));
+    });
   }
 
   String _mapFailureToMessage(Failure failure) {

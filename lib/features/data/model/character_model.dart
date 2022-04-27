@@ -11,7 +11,7 @@ class CharacterModel extends CharacterEntity {
       required LocationEntity? location,
       required String image,
       required List<String> episode,
-      required DateTime createdAt})
+      required DateTime created})
       : super(
             id: id,
             name: name,
@@ -20,7 +20,7 @@ class CharacterModel extends CharacterEntity {
             location: location!,
             image: image,
             episode: episode,
-            createdAt: createdAt);
+      created: created);
 
   factory CharacterModel.fromJson(Map<String, dynamic> json) {
     return CharacterModel(
@@ -34,7 +34,7 @@ class CharacterModel extends CharacterEntity {
         image: json['image'] as String,
         episode:
             (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
-        createdAt: DateTime.parse(json['createdAt'] as String));
+        created: DateTime.parse(json['created'] ));
   }
 
   Map<String, dynamic> toJson() {
@@ -46,7 +46,7 @@ class CharacterModel extends CharacterEntity {
       'location': location,
       'image': image,
       'episode': episode,
-      'createdAt': createdAt.toIso8601String(),
+      'created': created.toIso8601String(),
     });
   }
 }

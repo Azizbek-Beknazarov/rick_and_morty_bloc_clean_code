@@ -15,7 +15,7 @@ class CharacterRemoteDataSourceImple implements CharacterRemoteDataSource {
 
   @override
   Future<List<CharacterModel>> getAllCharacters(int page) async {
-    String url = 'https://rickandmortyapi.com/api/character/?name=$page';
+    String url = 'https://rickandmortyapi.com/api/character/?page=$page';
     print('CharacterRemoteDataSourceImple dagi url: $url');
 
     final response = await client
