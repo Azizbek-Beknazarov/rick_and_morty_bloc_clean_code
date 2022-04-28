@@ -99,8 +99,14 @@ class CharacterCard extends StatelessWidget {
                   const SizedBox(
                     height: 12,
                   ),
+
                   const Text(
-                    'Origin:',
+                    'Created at:',
+                    style: TextStyle(
+                      color:Colors.red,
+                    ),
+                  ),  Text(
+                    characterEntity.created.toString(),
                     style: TextStyle(
                       color:Colors.red,
                     ),

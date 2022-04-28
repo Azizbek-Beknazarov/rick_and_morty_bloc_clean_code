@@ -5,7 +5,9 @@ import 'package:rick_and_morty_bloc_clean_code/features/data/datasource/characte
 import 'package:rick_and_morty_bloc_clean_code/features/data/datasource/character_remote_datasource.dart';
 import 'package:rick_and_morty_bloc_clean_code/features/data/repository/character_repo_impl.dart';
 import 'package:rick_and_morty_bloc_clean_code/features/domain/repository/character_repository.dart';
+import 'package:rick_and_morty_bloc_clean_code/features/domain/usecases/search_character_usecase.dart';
 import 'package:rick_and_morty_bloc_clean_code/features/presentation/bloc/character_list_bloc/char_list_cubit.dart';
+import 'package:rick_and_morty_bloc_clean_code/features/presentation/bloc/search_bloc/search_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'features/domain/usecases/get_character_usecase.dart';
@@ -17,9 +19,13 @@ Future<void> init() async {
 //Cubit
   ls.registerFactory(
       () => CharListCubit(getCharacterUsecase: ls<GetCharacterUsecase>()));
+  //bloc
+  ls.registerFactory(
+          () => CharacterSearchBloc(searchCharacterUsecase: ls()));
 
 //Usecase
   ls.registerLazySingleton(() => GetCharacterUsecase(ls()));
+  ls.registerLazySingleton(() => SearchCharacterUsecase(ls()));
 
 //Repository
   ls.registerLazySingleton<CharacterRepo>(() => CharacterRepoImple(

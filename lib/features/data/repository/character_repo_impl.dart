@@ -42,4 +42,26 @@ class CharacterRepoImple implements CharacterRepo {
       }
     }
   }
+
+  @override
+  Future<Either<Failure, List<CharacterEntity>>> searchCharacter(String query) async{
+
+    if (await info.isConnected) {
+      try {
+        final List<CharacterModel> remoteChar =
+        await remoteDataSource.searchAllCharacters(query);
+        localDataSource.charactersToCache(remoteChar);
+        return Right(remoteChar);
+      } on ServerException {
+        return Left(ServerFailure());
+      }
+    } else {
+      try {
+        final localChar = await localDataSource.getLastCharacterFromCache();
+        return Right(localChar);
+      } on CacheException {
+        return Left(CacheFailure());
+      }
+    }
+  }
 }

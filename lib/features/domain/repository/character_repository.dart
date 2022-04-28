@@ -6,4 +6,5 @@ import '../../../core/error/failure.dart';
 abstract class CharacterRepo{
 
    Future<Either<Failure, List<CharacterEntity>>> getAllCharacter(int page);
+   Future<Either<Failure, List<CharacterEntity>>> searchCharacter(String query);
 }

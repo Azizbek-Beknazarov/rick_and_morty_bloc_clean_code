@@ -6,12 +6,15 @@ import 'package:http/http.dart' as http;
 
 abstract class CharacterRemoteDataSource {
   Future<List<CharacterModel>> getAllCharacters(int page);
+  Future<List<CharacterModel>> searchAllCharacters(String query);
 }
 
 class CharacterRemoteDataSourceImple implements CharacterRemoteDataSource {
   final http.Client client;
 
   CharacterRemoteDataSourceImple({required this.client});
+
+
 
   @override
   Future<List<CharacterModel>> getAllCharacters(int page) async {
@@ -29,5 +32,23 @@ class CharacterRemoteDataSourceImple implements CharacterRemoteDataSource {
     } else {
       throw ServerException();
     }
+  }
+
+  @override
+  Future<List<CharacterModel>> searchAllCharacters(String query) async{
+   final String url='https://rickandmortyapi.com/api/character/?name=$query';
+   print('CharacterRemoteDataSourceImple dagi url: $url');
+
+   final response = await client
+       .get(Uri.parse(url), headers: {'Content-Type': 'application/json'});
+
+   if (response.statusCode == 200) {
+     final list = jsonDecode(response.body);
+     return (list['results'] as List)
+         .map((e) => CharacterModel.fromJson(e))
+         .toList();
+   } else {
+     throw ServerException();
+   }
   }
 }

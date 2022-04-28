@@ -5,24 +5,19 @@ import 'package:rick_and_morty_bloc_clean_code/core/usecase/usecase.dart';
 import 'package:rick_and_morty_bloc_clean_code/features/domain/entities/character_entity.dart';
 import 'package:rick_and_morty_bloc_clean_code/features/domain/repository/character_repository.dart';
 
-class GetCharacterUsecase
-    extends Usecases<List<CharacterEntity>, CharacterPageParams> {
+class SearchCharacterUsecase extends Usecases<List<CharacterEntity>,CharacterQueryParams>{
   final CharacterRepo characterRepo;
-
-  GetCharacterUsecase(this.characterRepo);
-
+  SearchCharacterUsecase(this.characterRepo);
   @override
-  Future<Either<Failure, List<CharacterEntity>>> call(
-      CharacterPageParams params) async {
-    return await characterRepo.getAllCharacter(params.page);
+  Future<Either<Failure, List<CharacterEntity>>> call(CharacterQueryParams params)async {
+   return await characterRepo.searchCharacter(params.query);
   }
 }
 
-class CharacterPageParams extends Equatable {
-  final int page;
-
-  const CharacterPageParams({required this.page});
-
+class CharacterQueryParams extends Equatable{
+  final String query;
+  const CharacterQueryParams({required this.query});
   @override
-  List<Object?> get props => [page];
+  // TODO: implement props
+  List<Object?> get props => [query];
 }

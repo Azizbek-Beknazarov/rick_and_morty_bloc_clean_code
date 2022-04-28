@@ -34,7 +34,7 @@ class CharacterModel extends CharacterEntity {
         image: json['image'] as String,
         episode:
             (json['episode'] as List<dynamic>).map((e) => e as String).toList(),
-        created: DateTime.parse(json['created'] ));
+        created: DateTime.parse(json['created'] as String) );
   }
 
   Map<String, dynamic> toJson() {
